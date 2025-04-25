@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  /* Hero Section */
+  .home-hero {
+    margin-top: 60px;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+    color: #fff;
+    text-align: center; /* Center all content */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .home-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .home-hero .intro {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 2rem auto; /* Center paragraph and add spacing below */
+  }
+  .hero-buttons {
+    display: inline-flex; /* Keep buttons inline */
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center; /* Center buttons horizontally */
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .btn-primary {
+    background-color: #fff;
+    color: #007bff;
+  }
+  .btn-primary:hover {
+    background-color: #e0e0e0;
+  }
+  .btn-outline {
+    border: 2px solid #fff;
+    color: #fff;
+  }
+  .btn-outline:hover {
+    background-color: #fff;
+    color: #0056b3;
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: 3rem 1rem;
+    background-color: #f4f4f4;
+    text-align: center;
+    max-width: 700px;
+    margin: 3rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .contact-section h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  .contact-section p {
+    margin: 0.25rem 0;
+    font-size: 1rem;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 600px) {
+    .home-hero {
+      padding: 4rem 1.5rem;
+      border-radius: 0;
+      box-shadow: none;
+      max-width: 100%;
+      margin-top: 50px;
+      text-align: center;
+    }
+    .home-hero h1 {
+      font-size: 2.25rem;
+    }
+    .home-hero .intro {
+      font-size: 1.1rem;
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .hero-buttons {
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .contact-section {
+      max-width: 100%;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 2rem 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <section class="home-hero">
+    <h1>Welcome to NeighborNet</h1>
+    <p class="intro">
+      NeighborNet is your community-powered platform to connect with skilled individuals,
+      share tools, and build stronger neighborhood support networks.
+    </p>
+    <div class="hero-buttons">
+      <a href="{{ url_for('view_skills') }}" class="btn btn-primary">Find a Skilled Neighbor</a>
+      <a href="{{ url_for('add_tool') }}" class="btn btn-outline">Offer Your Tools</a>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <h3>📞 Contact Us for Complaints</h3>
+    <p><strong>Email:</strong> support@neighbornet.org</p>
+    <p><strong>Phone:</strong> +91 1234567890</p>
+  </section>
+{% endblock %}

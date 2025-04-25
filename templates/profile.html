@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  h2 {
+    text-align: center;
+    margin-top: 2rem;
+    color: white;
+  }
+  .profile-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: linear-gradient(to right, #00264d, #3399ff); /* deeper contrast */
+
+
+    color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ffd700;
+    margin-bottom: 1rem;
+  }
+  ul.profile-info {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-top: 1rem;
+  }
+  ul.profile-info li {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color:rgb(0, 0, 0)
+  }
+  ul.profile-info li strong {
+    display: inline-block;
+    width: 100px;
+    color:rgb(0, 0, 0);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+  <h2>My Profile</h2>
+  <img src="{{ url_for('static', filename='uploads/' + user.profile_photo) }}" alt="Profile Photo" class="profile-pic">
+  <ul class="profile-info">
+    <li><strong>Name:</strong> {{ user.name }}</li>
+    <li><strong>Email:</strong> {{ user.email }}</li>
+    <li><strong>Phone:</strong> {{ user.phone }}</li>
+    <li><strong>House No:</strong> {{ user.house_number }}</li>
+  </ul>
+</div>
+{% endblock %}

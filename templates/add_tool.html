@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  /* Form card container */
+  .form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    /* gradient background as requested */
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+    color: #fff;                    /* ensure text shows on dark background */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Heading */
+  .form-container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    text-align: center;
+    color: #fff;
+  }
+
+  /* Form group */
+  .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: rgb(0, 0, 0);                /* lighter label text */
+  }
+  .form-group label .required {
+    color: #e74c3c;
+  }
+
+  /* Inputs and textarea */
+  .form-group input[type="text"],
+  .form-group textarea,
+  .form-group input[type="file"] {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fff;              /* keep inputs white for readability */
+    color: #333;
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Submit button */
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #ffd700;     /* gold button for contrast */
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+  }
+  .btn-submit:hover {
+    background-color: #e6c200;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .form-container {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+    .form-container h2 {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h2>Add Tool for Sharing</h2>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="name">Tool Name <span class="required">*</span></label>
+      <input type="text" id="name" name="name" placeholder="Tool Name" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Tool Description <span class="required">*</span></label>
+      <textarea id="description" name="description" placeholder="Describe the tool" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Upload Tool Image <span class="required">*</span></label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+    <button type="submit" class="btn-submit">Add Tool</button>
+  </form>
+</div>
+{% endblock %}

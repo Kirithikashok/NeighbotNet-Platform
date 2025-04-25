@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  h2 {
+    text-align: center;
+    margin-top: 2rem;
+    color: #333;
+  }
+  form.search-form {
+    max-width: 600px;
+    margin: 1rem auto 2rem auto;
+    display: flex;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+  }
+  form.search-form input[type="text"],
+  form.search-form input[type="submit"] {
+    padding: 0.5rem 1rem;          /* same padding */
+    font-size: 1rem;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 38px;
+    font-family: inherit;
+  }
+  form.search-form input[type="text"] {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    color: #333;
+  }
+  form.search-form input[type="submit"] {
+    border: none;
+    background-color: #ffd700;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  form.search-form input[type="submit"]:hover {
+    background-color: #003d80;
+  }
+  
+
+  ul.tool-list {
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    padding: 0;
+    list-style: none;
+  }
+  ul.tool-list li {
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  ul.tool-list li p.description {
+    color: white;
+    margin: 0.3rem 0 0.8rem 0;
+  }
+  
+  ul.tool-list li strong {
+    font-size: 1.2rem;
+    color:rgb(255, 255, 255);
+  }
+  ul.tool-list img {
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  form.delete-form {
+    margin-top: 0.8rem;
+  }
+  form.delete-form input[type="submit"] {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  form.delete-form input[type="submit"]:hover {
+    background-color: #c0392b;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Listed Tools</h2>
+
+<form method="post" class="search-form">
+  <input type="text" name="search" placeholder="Search tools..." value="{{ request.form.get('search', '') }}">
+  <input type="submit" value="Search">
+</form>
+
+<ul class="tool-list">
+  {% for tool in tools %}
+    <li>
+      <strong>{{ tool.name }}</strong><br>
+      <p class="description">{{ tool.description }}</p>
+      <img src="{{ url_for('static', filename='uploads/' + tool.image) }}" alt="{{ tool.name }} image" width="200"><br>
+      {% if user_id == tool.user_id %}
+        <form action="{{ url_for('delete_tool', id=tool.id) }}" method="post" class="delete-form">
+          <input type="submit" value="Delete">
+        </form>
+      {% endif %}
+    </li>
+  {% else %}
+    <li>No tools found.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

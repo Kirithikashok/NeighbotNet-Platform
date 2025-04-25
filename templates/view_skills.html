@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  .search-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .search-container input[type="text"],
+  .search-container input[type="submit"] {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 6px;
+    box-sizing: border-box;
+    height: 42px; /* Fixed height to align both */
+  }
+  
+  .search-container input[type="text"] {
+    flex: 1;
+    border: 1px solid #ccc;
+  }
+  
+  .search-container input[type="submit"] {
+    background-color: #ffd700;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .skill-card {
+    background:rgb(4, 125, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgb(0, 0, 0);
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease-in-out;
+  }
+  .skill-card .skill {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color:rgb(0, 0, 0); /* Deep blue for skill title */
+  }
+  
+  .skill-card .description {
+    margin-top: 5px;
+    color: rgb(0, 0, 0); /* Darker gray for description */
+  }
+
+  .skill-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .skill-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+
+  .contact-info {
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+
+  .delete-form {
+    margin-top: 10px;
+  }
+
+  .delete-form input[type="submit"] {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  @media (min-width: 768px) {
+    .skill-card {
+      width: 45%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">Skilled Users</h2>
+
+<form method="post" class="search-container">
+  <input type="text" name="search" placeholder="Search skills..." value="{{ request.form.get('search', '') }}">
+  <input type="submit" value="Search">
+</form>
+
+<div class="skills-grid">
+  {% for skill in skills %}
+    <div class="skill-card">
+      <h3 class="skill">{{ skill.skill }}</h3>
+      <p class="description" >{{ skill.description }}</p>
+      <img src="{{ url_for('static', filename='uploads/' + skill.certificate) }}" alt="Certificate">
+
+      <div class="contact-info">
+        <strong>Contact Info:</strong><br>
+        📧 {{ skill.user.email }}<br>
+        📞 {{ skill.user.phone }}
+      </div>
+
+      {% if user_id == skill.user_id %}
+      <form action="{{ url_for('delete_skill', id=skill.id) }}" method="post" class="delete-form">
+        <input type="submit" value="Delete">
+      </form>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

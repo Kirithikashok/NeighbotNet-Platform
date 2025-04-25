@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeighborNet</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+  <style>
+    /* Reset and push everything below header */
+    body {
+      margin: 0;
+      padding-top: 60px;           /* = header height */
+    }
+
+    /* Fixed top-bar */
+    /* Top-bar with gradient and improved styling */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to right,rgb(71, 71, 71), #0056b3); /* deeper contrast */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .top-bar .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+    }
+    
+    .top-bar .menu-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+    
+    .top-bar .top-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .top-bar .welcome {
+      font-size: 1rem;
+      margin: 0;
+      line-height: 1;
+    }
+    
+    .top-bar .profile-pic {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+    
+
+
+    /* Sidebar under header */
+    .sidebar {
+      position: fixed;
+      top: 60px;                   /* below header */
+      left: 0;
+      width: 220px;
+      bottom: 0;
+      background-color: #e6f2ff;
+      padding-top: 1rem;
+      overflow-y: auto;
+      z-index: 900;
+      transition: left 0.3s ease;
+    }
+    .sidebar.sidebar-hidden {
+      left: -220px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar li {
+      margin: 0.5rem 0;
+    }
+    .sidebar a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #003366;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .sidebar a:hover {
+      background-color: #cce0ff;
+    }
+
+    /* Main content and footer shifted right */
+    .main-content {
+      margin-left: 220px;          /* = sidebar width */
+      padding: 1rem;
+    }
+    footer.footer {
+      margin-left: 220px;
+      padding: 1rem;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    /* Flash messages styling */
+    .flashes {
+      margin-bottom: 1rem;
+    }
+    .flash {
+      background-color: #fffae6;
+      border: 1px solid #ffe58f;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .main-content,
+      footer.footer {
+        margin-left: 0;
+      }
+      .sidebar {
+        width: 200px;
+      }
+      .sidebar.sidebar-hidden {
+        left: -200px;
+      }
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {# make current_user available as user #}
+  {% set user = current_user %}
+
+  <!-- Top Bar -->
+  <header class="top-bar" role="banner">
+    <div class="top-left">
+      <a href="{{ url_for('home') }}" class="logo">NeighborNet</a>
+      {% if user %}
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
+      {% endif %}
+    </div>
+    <div class="top-right">
+      {% if user %}
+        <span class="welcome">Hello, {{ user.name }}!</span>
+        <a href="{{ url_for('profile') }}">
+          <img src="{{ url_for('static', filename='uploads/' + user.profile_photo) }}"
+               alt="Profile photo of {{ user.name }}"
+               class="profile-pic" />
+        </a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Sidebar (logged-in only) -->
+  {% if user %}
+  <nav class="sidebar" id="sidebar" role="navigation">
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('profile') }}">Profile</a></li>
+      <li><a href="{{ url_for('add_skill') }}">Add Skilled User</a></li>
+      <li><a href="{{ url_for('view_skills') }}">View Skilled Users</a></li>
+      <li><a href="{{ url_for('add_tool') }}">Add Tool</a></li>
+      <li><a href="{{ url_for('view_tools') }}">Listed Tools</a></li>
+      {% if user.is_admin %}
+        <li><a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a></li>
+      {% endif %}
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  </nav>
+  {% endif %}
+
+  <!-- Main Content -->
+  <main class="main-content" role="main">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flashes">
+          {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <!-- Sidebar Toggle Script -->
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("sidebar-hidden");
+    }
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

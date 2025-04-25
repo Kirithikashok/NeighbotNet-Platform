@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #f0f2f5;
+  }
+
+  .register-container {
+    background: linear-gradient(135deg, rgb(71, 71, 71), #0056b3);
+    padding: 2rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    width: 400px;
+    max-height: 85vh;
+    overflow-y: auto;
+    color: white;
+    text-align: center;
+  }
+
+  .register-container h2 {
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    font-size: 2rem;
+    color: white
+  }
+
+  .register-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .register-container input[type="text"],
+  .register-container input[type="email"],
+  .register-container input[type="password"],
+  .register-container input[type="file"] {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    background-color: rgba(255,255,255,0.9);
+    color: #333;
+  }
+
+  .register-container input::placeholder {
+    color: #666;
+  }
+
+  .register-container input[type="submit"] {
+    background-color: #fff;
+    color: #0056b3;
+    font-weight: 700;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .register-container input[type="submit"]:hover {
+    background-color: #0041a8;
+    color: white;
+  }
+
+  .register-container label {
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: white;
+  }
+
+  @media (max-width: 420px) {
+    .register-container {
+      width: 90%;
+      padding: 1.5rem 1rem;
+      max-height: 90vh;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <h2>Register</h2>
+  <form method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <input type="text" name="house_number" placeholder="House Number" required>
+    <label for="profile_photo">Upload Profile Photo:</label>
+    <input type="file" id="profile_photo" name="profile_photo" accept="image/*" required>
+    <input type="submit" value="Register">
+  </form>
+</div>
+{% endblock %}

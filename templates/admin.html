@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background-color: green;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn[disabled] {
+            background-color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Admin Dashboard</h2>
+    <p style="text-align:center;">Logged in as: {{ user.name }}</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul style="color: green;">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <table>
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Skill</th>
+                <th>Description</th>
+                <th>Certificate</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for skill, user in certificate_requests %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ skill.skill }}</td>
+                    <td>{{ skill.description }}</td>
+                    <td>
+                        {% if skill.certificate %}
+                            <a href="{{ url_for('static', filename='uploads/' ~ skill.certificate) }}" target="_blank">View</a>
+                        {% else %}
+                            No certificate
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if skill.verified %}
+                            ✅ Verified
+                        {% else %}
+                            ❌ Not Verified
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not skill.verified %}
+                            <form method="POST" action="{{ url_for('verify_certificate', skill_id=skill.id) }}">
+                                <button type="submit" class="btn">Approve</button>
+                            </form>
+                        {% else %}
+                            <button class="btn" disabled>Approved</button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

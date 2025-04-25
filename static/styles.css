@@ -1,0 +1,259 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* GENERAL BODY */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #e3f2fd, #ffffff);
+    color: #333;
+    min-height: 100vh;
+  }
+  
+  /* HEADER */
+  .top-bar {
+    background-color: #1976d2;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .top-left {
+    font-size: 24px;
+  }
+  
+  .menu-toggle {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 5px 10px;
+  }
+  
+  .top-right a,
+  .top-right img {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .profile-pic {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+  
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    background-color: #bbdefb;
+    width: 230px;
+    height: 100%;
+    padding-top: 20px;
+    z-index: 90;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar-hidden {
+    transform: translateX(-250px);
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 12px 20px;
+    border-bottom: 1px solid #90caf9;
+  }
+  
+  .sidebar ul li a {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    display: block;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: white;
+    color: black;
+    border-radius: 6px;
+  }
+  
+  /* MAIN CONTENT */
+  .main-content {
+    margin-left: 240px;
+    padding: 40px;
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .flash {
+    background-color: #c8e6c9;
+    color: #1b5e20;
+    border-left: 5px solid #2e7d32;
+    padding: 12px 18px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+  }
+  
+  h1, h2, h3 {
+    color: #0d47a1;
+    margin-bottom: 20px;
+  }
+  
+  /* FORMS */
+  form {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin-bottom: 30px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="file"],
+  input[type="search"],
+  textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  input[type="submit"],
+  button {
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  input[type="submit"]:hover,
+  button:hover {
+    background-color: #0d47a1;
+  }
+  
+  /* SKILL & TOOL LISTING CARDS */
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  ul li {
+    background-color: #e3f2fd;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(33, 150, 243, 0.1);
+    position: relative;
+  }
+  
+  ul li img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  
+  ul li form {
+    display: inline;
+  }
+  
+  ul li input[type="submit"] {
+    background-color: crimson;
+    margin-top: 10px;
+  }
+  
+  ul li input[type="submit"]:hover {
+    background-color: darkred;
+  }
+  
+  /* HOMEPAGE DESIGN */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  
+  .building-img {
+    width: 90%;
+    max-width: 700px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .intro {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.6;
+  }
+  
+  .contact-info {
+    background-color: #bbdefb;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 30px;
+    color: #0d47a1;
+    font-size: 16px;
+  }
+  
+  /* RESPONSIVE */
+  @media screen and (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+    }
+  
+    .sidebar {
+      transform: translateX(-250px);
+      position: fixed;
+    }
+  
+    .sidebar.show {
+      transform: translateX(0);
+    }
+  
+    .top-bar {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    form {
+      padding: 20px;
+    }
+  }
+  
